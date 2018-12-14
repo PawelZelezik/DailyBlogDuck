@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">DuckBlog</string>
+    <string name="icon_login_page">Icon_login_page</string>
+    <string name="your_login">Your Login</string>
+    <string name="pass_hint">Password...</string>
+    <string name="email_hint">Your email...</string>
+    <string name="text_login_button">Login to account</string>
+    <string name="login_reg_button">Need a new Account?</string>
+    <string name="action_search_text">Search</string>
+    <string name="action_setting_text">Account Settings</string>
+    <string name="action_logout_text">Logout</string>
+</resources>
