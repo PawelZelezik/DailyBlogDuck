@@ -35,10 +35,22 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         loginEmailText = (EditText) findViewById(R.id.login_email);
-        loginPassText = (EditText) findViewById(R.id.login_password);
+        loginPassText = (EditText) findViewById(R.id.reg_confirm_pass);
         loginBtn = (Button)  findViewById(R.id.login_button);
         loginRegBtn = (Button) findViewById(R.id.login_reg_button);
         loginProgress = (ProgressBar) findViewById(R.id.login_progress);
+
+        loginRegBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent regIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(regIntent);
+                finish();
+
+            }
+        });
+
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
