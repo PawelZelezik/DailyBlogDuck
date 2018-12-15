@@ -17,6 +17,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText loginEmailText;
@@ -34,11 +36,11 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        loginEmailText = (EditText) findViewById(R.id.login_email);
-        loginPassText = (EditText) findViewById(R.id.reg_confirm_pass);
-        loginBtn = (Button)  findViewById(R.id.login_button);
-        loginRegBtn = (Button) findViewById(R.id.login_reg_button);
-        loginProgress = (ProgressBar) findViewById(R.id.login_progress);
+        loginEmailText = findViewById(R.id.login_email);
+        loginPassText = findViewById(R.id.reg_confirm_pass);
+        loginBtn = findViewById(R.id.login_button);
+        loginRegBtn = findViewById(R.id.login_reg_button);
+        loginProgress = findViewById(R.id.login_progress);
 
         loginRegBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             }else {
 
-                                String errorMessage = task.getException().getMessage();
+                                String errorMessage = Objects.requireNonNull(task.getException()).getMessage();
                                 Toast.makeText(LoginActivity.this, "Error : " + errorMessage, Toast.LENGTH_LONG).show();
                             }
 
