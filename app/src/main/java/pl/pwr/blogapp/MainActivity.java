@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -53,6 +54,12 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_logout_btn:
                 logOut();
+                return true;
+
+            case R.id.action_settings_btn:
+
+                Intent settingsIntent = new Intent(MainActivity.this, SetupActivity.class);
+                startActivity(settingsIntent);
 
                 return true;
 
