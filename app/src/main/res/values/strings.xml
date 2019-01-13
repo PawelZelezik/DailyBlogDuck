@@ -16,4 +16,7 @@
     <string name="reg_confirm_pass_text">Confirm Password...</string>
     <string name="setup_name_hint">Your Name ...</string>
     <string name="setup_btn_name_text">Save Account Settings</string>
+    <string name="post_desc_hint">Add Description ...</string>
+    <string name="post_btn_hint">Post Photo</string>
+    <string name="new_post_image_desc">Default image</string>
 </resources>
