@@ -19,4 +19,10 @@
     <string name="post_desc_hint">Add Description ...</string>
     <string name="post_btn_hint">Post Photo</string>
     <string name="new_post_image_desc">Default image</string>
+    <string name="bottom_home_text">Home</string>
+    <string name="bottom_notifi_text">Notification</string>
+    <string name="bottom_ac_text">Account</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
