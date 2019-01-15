@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -106,7 +107,7 @@ public class NewPostActivity extends AppCompatActivity {
 
                     final String randomName = UUID.randomUUID().toString();
 
-                    StorageReference filePath = storageReference.child("post_images").child(randomName + ".jpg");
+                    final StorageReference filePath = storageReference.child("post_images").child(randomName + ".jpg");
                     filePath.putFile(postImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
@@ -134,48 +135,64 @@ public class NewPostActivity extends AppCompatActivity {
                                 compressedImageFile.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                                 byte[] thumbData = baos.toByteArray();
 
-                                UploadTask uploadTask = storageReference.child("post_images/thumbs")
-                                        .child(randomName + ".jpg").putBytes(thumbData);
 
-                                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                final StorageReference thumbRef = storageReference.child("post_images/thumbs")
+                                        .child(randomName + ".jpg");
+                                UploadTask uploadTask = thumbRef.putBytes(thumbData);
+
+                                Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                                     @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        Task<Uri> task = taskSnapshot.getMetadata().getReference().getDownloadUrl();
-                                        String downloadThumbUri = task.toString();
+                                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
 
-                                        Map<String, Object> postMap = new HashMap<>();
-                                        postMap.put("imageUrl", download_uri);
-                                        postMap.put("thumbUrl", downloadThumbUri);
-                                        postMap.put("desc", desc);
-                                        postMap.put("user_id", current_user_id);
-                                        postMap.put("timestamp", FieldValue.serverTimestamp());
+                                        if (!task.isSuccessful()) {
+                                            throw task.getException();
+                                        }
 
-
-                                        firebaseFirestore.collection("Posts").add(postMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<DocumentReference> task) {
-
-                                                if(task.isSuccessful()){
-
-                                                    Toast.makeText(NewPostActivity.this, "Post was added", Toast.LENGTH_LONG).show();
-                                                    finish();
-
-                                                }else{
-
-                                                }
-
-                                                newPostProgres.setVisibility(View.INVISIBLE);
-
-                                            }
-                                        });
-
+                                        // Continue with the task to get the download URL
+                                        return thumbRef.getDownloadUrl();
 
                                     }
-                                }).addOnFailureListener(new OnFailureListener() {
+                                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                                     @Override
-                                    public void onFailure(@NonNull Exception e) {
+                                    public void onComplete(@NonNull Task<Uri> task) {
 
-                                        //Error info
+                                        if (task.isSuccessful()) {
+                                            Uri downloadThumUri = task.getResult();
+                                            String thumbUri = downloadThumUri.toString();
+                                            Map<String, Object> postMap = new HashMap<>();
+                                            postMap.put("imageUrl", download_uri);
+                                            postMap.put("thumbUrl", thumbUri);
+                                            postMap.put("desc", desc);
+                                            postMap.put("user_id", current_user_id);
+                                            postMap.put("timestamp", FieldValue.serverTimestamp());
+
+
+                                            firebaseFirestore.collection("Posts").add(postMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<DocumentReference> task) {
+
+                                                    if(task.isSuccessful()){
+
+                                                        Toast.makeText(NewPostActivity.this, "Post was added", Toast.LENGTH_LONG).show();
+                                                        Intent mainIntent = new Intent(NewPostActivity.this, MainActivity.class);
+                                                        startActivity(mainIntent);
+                                                        finish();
+
+                                                    }else{
+
+                                                    }
+
+                                                    newPostProgres.setVisibility(View.INVISIBLE);
+
+                                                }
+                                            });
+
+
+                                        } else {
+                                            // Handle failures
+                                            // ...
+                                        }
+
 
                                     }
                                 });
