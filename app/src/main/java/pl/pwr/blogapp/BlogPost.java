@@ -1,21 +1,24 @@
 package pl.pwr.blogapp;
 
-import com.google.firebase.Timestamp;
+
+import android.net.Uri;
+
+import java.util.Date;
 
 public class BlogPost {
 
-    public String user_id, image_url, desc, thumb;
-    public Timestamp timestamp;
+    public String user_id, image_url, desc, image_thumb;
+    public Date timestamp;
 
     public BlogPost() {
 
     }
 
-    public BlogPost(String user_id, String image_url, String desc, String thumb, Timestamp timestamp) {
+    public BlogPost(String user_id, String image_url, String desc, String image_thumb, Date timestamp) {
         this.user_id = user_id;
         this.image_url = image_url;
         this.desc = desc;
-        this.thumb = thumb;
+        this.image_thumb = image_thumb;
         this.timestamp = timestamp;
     }
 
@@ -27,11 +30,11 @@ public class BlogPost {
         this.user_id = user_id;
     }
 
-    public String getImage_url() {
+    public String getImageUrl() {
         return image_url;
     }
 
-    public void setImage_url(String image_url) {
+    public void setImageUrl(String image_url) {
         this.image_url = image_url;
     }
 
@@ -43,20 +46,19 @@ public class BlogPost {
         this.desc = desc;
     }
 
-    public String getThumb() {
-        return thumb;
+    public String getThumbUrl() {
+        return image_thumb;
     }
 
-    public void setThumb(String thumb) {
-        this.thumb = thumb;
+    public void setThumbUrl(String image_thumb) {
+        this.image_thumb = image_thumb;
     }
 
-    public Timestamp getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
-
 }

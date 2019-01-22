@@ -75,7 +75,7 @@ public class SetupActivity extends AppCompatActivity {
         setupBtn = findViewById(R.id.setup_btn);
         setupProgressBar = findViewById(R.id.setup_progress);
 
-        setupProgressBar.setVisibility(View.VISIBLE);
+        setupProgressBar.setVisibility(View.INVISIBLE);
         setupBtn.setEnabled(false);
 
         firebaseFirestorage.collection("Users").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

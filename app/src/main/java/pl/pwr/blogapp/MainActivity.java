@@ -50,56 +50,60 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseFirestore = firebaseFirestore.getInstance();
 
-        mainToolbar = findViewById(R.id.main_toolbar);
-        setSupportActionBar(mainToolbar);
-        addPostBtn = findViewById(R.id.add_post_btn);
-        getSupportActionBar().setTitle("DailyBlogDuck");
+        if(mAuth.getCurrentUser() != null) {
 
-        mainbottomNav = findViewById(R.id.main_bottom_nav);
+            mainToolbar = findViewById(R.id.main_toolbar);
+            setSupportActionBar(mainToolbar);
+            addPostBtn = findViewById(R.id.add_post_btn);
+            getSupportActionBar().setTitle("DailyBlogDuck");
 
-        //Fragments
 
-        homeFragment = new HomeFragment();
-        notificationFragment = new NotificationFragment();
-        accountFragment = new AccountFragment();
 
-        //End of fragments
+            mainbottomNav = findViewById(R.id.main_bottom_nav);
 
-        mainbottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            //Fragments
 
-                switch (menuItem.getItemId()){
+            homeFragment = new HomeFragment();
+            notificationFragment = new NotificationFragment();
+            accountFragment = new AccountFragment();
+            replaceFragment(homeFragment);
 
-                    case R.id.bottom_action_home :
-                        replaceFragment(homeFragment);
-                        return true;
+            mainbottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                    case R.id.bottom_action_notification :
-                        replaceFragment(notificationFragment);
-                        return true;
+                    switch (menuItem.getItemId()) {
 
-                    case R.id.bottom_action_account :
-                        replaceFragment(accountFragment);
-                        return true;
+                        case R.id.bottom_action_home:
+                            replaceFragment(homeFragment);
+                            return true;
 
-                        default :
+                        case R.id.bottom_action_notification:
+                            replaceFragment(notificationFragment);
+                            return true;
+
+                        case R.id.bottom_action_account:
+                            replaceFragment(accountFragment);
+                            return true;
+
+                        default:
                             return false;
 
+                    }
                 }
-            }
-        });
+            });
 
 
-        addPostBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            addPostBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                Intent newPostIntent = new Intent(MainActivity.this, NewPostActivity.class);
-                startActivity(newPostIntent);
+                    Intent newPostIntent = new Intent(MainActivity.this, NewPostActivity.class);
+                    startActivity(newPostIntent);
 
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override
@@ -176,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth.signOut();
         sendToLogin();
+        finish();
     }
 
 

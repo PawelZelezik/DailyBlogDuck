@@ -25,11 +25,11 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/blog_user_image"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/def_image_icon"
+                android:src="@drawable/image_user_image_placeholder"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:text="Username"
+                android:text="@string/username_post"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/blog_user_image"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -49,15 +49,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Data Time"
+                android:text="@string/data_time_post"
                 app:layout_constraintStart_toEndOf="@+id/blog_user_image"
                 app:layout_constraintTop_toBottomOf="@+id/blog_user_name" />
 
             <ImageView
                 android:id="@+id/blog_post_image"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 android:layout_marginTop="8dp"
+                android:contentDescription="@string/default_post_image"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +73,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ipsum augue, pellentesque eget mollis eget, maximus nec purus. Aenean in laoreet dui. Nam vitae dolor ut neque consectetur venenatis."
+                android:text="@string/lorem_ipsum"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

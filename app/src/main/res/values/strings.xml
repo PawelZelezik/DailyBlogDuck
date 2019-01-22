@@ -22,4 +22,8 @@
     <string name="bottom_home_text">Home</string>
     <string name="bottom_notifi_text">Notification</string>
     <string name="bottom_ac_text">Account</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ipsum augue, pellentesque eget mollis eget, maximus nec purus. Aenean in laoreet dui. Nam vitae dolor ut neque consectetur venenatis.</string>
+    <string name="default_post_image">def image</string>
+    <string name="data_time_post">Data Time</string>
+    <string name="username_post">Username</string>
 </resources>
