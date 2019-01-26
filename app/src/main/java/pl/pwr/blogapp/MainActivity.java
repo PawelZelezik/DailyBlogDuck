@@ -160,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_logout_btn:
                 logOut();
+                finish();
                 return true;
 
             case R.id.action_settings_btn:
