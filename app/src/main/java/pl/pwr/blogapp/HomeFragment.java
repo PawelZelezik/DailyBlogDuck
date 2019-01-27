@@ -48,6 +48,7 @@ public class HomeFragment extends Fragment {
     private DocumentSnapshot lastVisible;
     private Boolean isFirstPageFirstLoad = true;
 
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -109,7 +110,7 @@ public class HomeFragment extends Fragment {
                                 if (doc.getType() == DocumentChange.Type.ADDED) {
 
                                     String blogPostId = doc.getDocument().getId();
-                                    BlogPost blogPost = doc.getDocument().toObject(BlogPost.class);
+                                    BlogPost blogPost = doc.getDocument().toObject(BlogPost.class).withId(blogPostId);
 
                                     if (isFirstPageFirstLoad) {
 
@@ -156,7 +157,7 @@ public class HomeFragment extends Fragment {
                                 if (doc.getType() == DocumentChange.Type.ADDED) {
 
                                     String blogPostId = doc.getDocument().getId();
-                                    BlogPost blogPost = doc.getDocument().toObject(BlogPost.class);
+                                    BlogPost blogPost = doc.getDocument().toObject(BlogPost.class).withId(blogPostId);
                                     blog_list.add(blogPost);
 
                                     blogRecyclerAdapter.notifyDataSetChanged();

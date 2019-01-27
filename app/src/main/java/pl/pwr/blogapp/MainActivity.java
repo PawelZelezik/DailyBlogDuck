@@ -66,24 +66,27 @@ public class MainActivity extends AppCompatActivity {
             homeFragment = new HomeFragment();
             notificationFragment = new NotificationFragment();
             accountFragment = new AccountFragment();
-            replaceFragment(homeFragment);
+
+            initializeFragment();
 
             mainbottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
+                    Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+
                     switch (menuItem.getItemId()) {
 
                         case R.id.bottom_action_home:
-                            replaceFragment(homeFragment);
+                            replaceFragment(homeFragment, currentFragment);
                             return true;
 
                         case R.id.bottom_action_notification:
-                            replaceFragment(notificationFragment);
+                            replaceFragment(notificationFragment, currentFragment);
                             return true;
 
                         case R.id.bottom_action_account:
-                            replaceFragment(accountFragment);
+                            replaceFragment(accountFragment, currentFragment);
                             return true;
 
                         default:
@@ -134,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                     }else{
 
                         String error = task.getException().getMessage();
-                        Toast.makeText(MainActivity.this, "(IMAGE Error): " + error, Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "(Error): " + error, Toast.LENGTH_LONG).show();
 
                     }
 
@@ -160,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_logout_btn:
                 logOut();
-                finish();
                 return true;
 
             case R.id.action_settings_btn:
@@ -193,10 +195,46 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void replaceFragment(Fragment fragment){
+    private void initializeFragment() {
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_container, fragment);
+
+        fragmentTransaction.add(R.id.main_container, homeFragment);
+        fragmentTransaction.add(R.id.main_container, notificationFragment);
+        fragmentTransaction.add(R.id.main_container, accountFragment);
+
+        fragmentTransaction.hide(notificationFragment);
+        fragmentTransaction.hide(accountFragment);
+
+        fragmentTransaction.commit();
+    }
+
+    private void replaceFragment(Fragment fragment, Fragment currentFragment){
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        if(fragment == homeFragment){
+
+            fragmentTransaction.hide(accountFragment);
+            fragmentTransaction.hide(notificationFragment);
+
+        }
+
+        if(fragment == accountFragment){
+
+            fragmentTransaction.hide(homeFragment);
+            fragmentTransaction.hide(notificationFragment);
+
+        }
+
+        if(fragment == notificationFragment){
+
+            fragmentTransaction.hide(homeFragment);
+            fragmentTransaction.hide(accountFragment);
+
+        }
+        fragmentTransaction.show(fragment);
+
+        //fragmentTransaction.replace(R.id.main_container, fragment);
         fragmentTransaction.commit();
 
     }
