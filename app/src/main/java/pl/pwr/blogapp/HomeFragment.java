@@ -41,6 +41,7 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView photoListView;
     private List<BlogPost> blog_list;
+    private List<User> userList;
     private BlogRecyclerAdapter blogRecyclerAdapter;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
@@ -62,7 +63,8 @@ public class HomeFragment extends Fragment {
 
         photoListView = view.findViewById(R.id.photo_post_view);
         blog_list = new ArrayList<>();
-        blogRecyclerAdapter = new BlogRecyclerAdapter(blog_list);
+        userList = new ArrayList<>();
+        blogRecyclerAdapter = new BlogRecyclerAdapter(blog_list, userList);
         photoListView.setLayoutManager(new LinearLayoutManager(container.getContext()));
         photoListView.setAdapter(blogRecyclerAdapter);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -101,6 +103,7 @@ public class HomeFragment extends Fragment {
 
                                 lastVisible = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size() - 1);
                                 blog_list.clear();
+                                userList.clear();
 
                             }
 
@@ -110,17 +113,32 @@ public class HomeFragment extends Fragment {
                                 if (doc.getType() == DocumentChange.Type.ADDED) {
 
                                     String blogPostId = doc.getDocument().getId();
-                                    BlogPost blogPost = doc.getDocument().toObject(BlogPost.class).withId(blogPostId);
+                                    final BlogPost blogPost = doc.getDocument().toObject(BlogPost.class).withId(blogPostId);
 
-                                    if (isFirstPageFirstLoad) {
+                                    String blogUserId = doc.getDocument().getString("user_id");
+                                    firebaseFirestore.collection("Users").document(blogUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-                                        blog_list.add(blogPost);
+                                            if(task.isSuccessful()){
 
-                                    } else {
-                                        blog_list.add(0, blogPost);
-                                    }
+                                                User user = task.getResult().toObject(User.class);
 
-                                    blogRecyclerAdapter.notifyDataSetChanged();
+                                                if (isFirstPageFirstLoad) {
+
+                                                    userList.add(user);
+                                                    blog_list.add(blogPost);
+
+                                                } else {
+
+                                                    userList.add(0, user);
+                                                    blog_list.add(0, blogPost);
+                                                }
+
+                                                blogRecyclerAdapter.notifyDataSetChanged();
+                                            }
+                                        }
+                                    });
                                 }
                             }
 
@@ -157,10 +175,24 @@ public class HomeFragment extends Fragment {
                                 if (doc.getType() == DocumentChange.Type.ADDED) {
 
                                     String blogPostId = doc.getDocument().getId();
-                                    BlogPost blogPost = doc.getDocument().toObject(BlogPost.class).withId(blogPostId);
-                                    blog_list.add(blogPost);
+                                    final BlogPost blogPost = doc.getDocument().toObject(BlogPost.class).withId(blogPostId);
+                                    String blogUserId = doc.getDocument().getString("user_id");
 
-                                    blogRecyclerAdapter.notifyDataSetChanged();
+                                    firebaseFirestore.collection("Users").document(blogUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                                            if(task.isSuccessful()){
+
+                                                User user = task.getResult().toObject(User.class);
+
+                                                userList.add(user);
+                                                blog_list.add(blogPost);
+
+                                                blogRecyclerAdapter.notifyDataSetChanged();
+                                            }
+                                        }
+                                    });
 
                                 }
                             }

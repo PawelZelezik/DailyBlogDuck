@@ -157,8 +157,8 @@ public class NewPostActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Uri> task) {
 
                                         if (task.isSuccessful()) {
-                                            Uri downloadThumUri = task.getResult();
-                                            String thumbUri = downloadThumUri.toString();
+                                            Uri downloadThumbUri = task.getResult();
+                                            String thumbUri = downloadThumbUri.toString();
                                             Map<String, Object> postMap = new HashMap<>();
                                             postMap.put("image_url", download_uri);
                                             postMap.put("image_thumb", thumbUri);

@@ -33,6 +33,8 @@
         <activity
             android:name=".NewPostActivity"
             android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".CommentActivity"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

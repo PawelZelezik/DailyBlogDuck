@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,7 +24,7 @@
             android:layout_height="wrap_content">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/blog_user_image"
+                android:id="@+id/comment_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -40,7 +41,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/username_post"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/blog_user_image"
+                app:layout_constraintStart_toEndOf="@+id/comment_image"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -49,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/data_time_post"
-                app:layout_constraintStart_toEndOf="@+id/blog_user_image"
+                app:layout_constraintStart_toEndOf="@+id/comment_image"
                 app:layout_constraintTop_toBottomOf="@+id/blog_user_name" />
 
             <ImageView
@@ -61,7 +62,7 @@
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/blog_user_image"
+                app:layout_constraintTop_toBottomOf="@+id/comment_image"
                 app:srcCompat="@drawable/image_placeholder" />
 
             <ImageView
@@ -101,6 +102,29 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/blog_like_btn"
                 app:layout_constraintTop_toBottomOf="@+id/blog_post_desc" />
+
+            <ImageView
+                android:id="@+id/blog_comment_btn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/blog_comment_btn_desc"
+                app:layout_constraintBottom_toBottomOf="@+id/blog_like_btn"
+                app:layout_constraintEnd_toStartOf="@+id/blog_comment_count"
+                app:layout_constraintTop_toBottomOf="@+id/blog_post_desc"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@mipmap/action_comments" />
+
+            <TextView
+                android:id="@+id/blog_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="@string/comment_0_comment"
+                app:layout_constraintBottom_toBottomOf="@+id/blog_comment_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/blog_comment_btn" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>

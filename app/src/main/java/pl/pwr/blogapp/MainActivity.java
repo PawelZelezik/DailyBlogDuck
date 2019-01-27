@@ -1,8 +1,6 @@
 package pl.pwr.blogapp;
 
 import android.content.Intent;
-import android.icu.text.UnicodeSetSpanner;
-import android.sax.StartElementListener;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
